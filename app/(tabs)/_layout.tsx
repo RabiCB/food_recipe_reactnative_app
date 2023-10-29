@@ -113,7 +113,7 @@ const handleSearch=()=>{
             marginLeft:8,
           
           }}>
-            <TouchableOpacity activeOpacity={1} accessibilityIgnoresInvertColors style={styles.Backtitle} onPress={()=>router.back()}>
+            <TouchableOpacity activeOpacity={1}  style={styles.Backtitle} onPress={()=>router.back()}>
                 <Ionicons name="chevron-back" size={24} color={colorScheme==="dark"?'#fff':'#000'} />
                
             </TouchableOpacity>
@@ -125,10 +125,6 @@ const handleSearch=()=>{
               borderColor:'gray',
           minWidth:260,
           position:'relative',
-         
-         
-          
-          maxWidth:340,
               borderRadius:4,
               padding:6,
               
@@ -168,18 +164,7 @@ const handleSearch=()=>{
 
 
 const styles=StyleSheet.create({
-  input:{
-
-    borderWidth:1,
-    borderColor:'red',
-minWidth:260,
-
-
-maxWidth:340,
-    borderRadius:4,
-    padding:4,
-    
-  },
+  
   Backtitle:{
     flexDirection:'row',
     alignItems:'center',

@@ -23,7 +23,7 @@ export default function Catogories() {
 
     const renderItem=({item}:any)=>(
 
-        <Itemcard id={item?.idMeal} mealname={item?.strCategory} imgsrc={item?.strCategoryThumb} />
+        <Itemcard page="Categories" id={item?.idMeal} mealname={item?.strCategory} imgsrc={item?.strCategoryThumb} />
 
     )
 

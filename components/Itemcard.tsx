@@ -7,11 +7,12 @@ interface Iprops{
 imgsrc?:string
 mealname:string
 id:string
+page?:string
 
 
 }
 
- function Itemcard({mealname,imgsrc,id}:Iprops) {
+ function Itemcard({mealname,imgsrc,id,page}:Iprops) {
 
     const colorScheme=useColorScheme()
 
@@ -22,7 +23,13 @@ id:string
         width:120,
         
       }}>
-        <TouchableOpacity activeOpacity={1} onPress={()=>{router.push(`/fooditem/${id}`)}}>
+        <TouchableOpacity activeOpacity={1} onPress={()=>{
+          if(page!=="Categories"){
+            router.push(`/fooditem/${id}`)
+          }else{
+            router.push(`/categories/${mealname}`)
+          }
+        }}>
         <Image source={{
           uri:imgsrc
         }} height={120} width={120}  borderRadius={8}/>

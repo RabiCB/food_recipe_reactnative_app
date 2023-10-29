@@ -15,15 +15,14 @@ const Page = () => {
 
     
 
-    const {searchText,setSearchText}=useSearchStore()
 const colorScheme=useColorScheme()
-    const getSearchData=async()=>{
-        const res = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${searchText}`);
+    const getCategoriesdata=async()=>{
+        const res = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${slug}`);
         
         return res?.json()
         
       }
-      const {data:searchData,isLoading:searching}=useQuery({queryKey:['getSearchData2',searchText],queryFn:getSearchData})
+      const {data,isLoading:searching}=useQuery({queryKey:['getCategoriesdata',slug],queryFn:getCategoriesdata})
 
       const renderItem=({item}:any)=>(
 
@@ -53,16 +52,11 @@ const colorScheme=useColorScheme()
 
    
 
-      const handleSearch=()=>{
-
-        router.push(`/search/${searchText}`)
-       
-      
-      }
+     
        
   return (
     <View style={{
-     
+        flex:1,
         paddingHorizontal:8,
         paddingBottom:10
 
@@ -76,54 +70,22 @@ const colorScheme=useColorScheme()
           marginLeft:8,
         
         }}>
-          <TouchableOpacity activeOpacity={1} accessibilityIgnoresInvertColors  onPress={()=>router.back()}>
+          <TouchableOpacity activeOpacity={1} accessibilityIgnoresInvertColors style={styles.Backtitle} onPress={()=>router.back()}>
               <Ionicons name="chevron-back" size={24} color={colorScheme==="dark"?'#fff':'#000'} />
              
           </TouchableOpacity>
         </View>
       },
-        headerTitle: ()=>{
-          return<View style={{
-            borderWidth:1,
-            borderColor:'gray',
-        minWidth:260,
-        position:'relative',
-        maxWidth:340,
-            borderRadius:4,
-            padding:6,
-            
 
-         }}  >
-           <TextInput style={{
-              
-          color:colorScheme==="dark"?'#fff':'#000',
-          outline:'none'
-           }}
-          
-        returnKeyType='search' placeholder='search for recipes..' value={searchText} onChangeText={(text)=>setSearchText(text)}
-            onSubmitEditing={
-            handleSearch
-           } />
-           {searchText &&<Entypo name="cross" onPress={()=>{
-            setSearchText('')
-           }} style={{
-            
-            position:'absolute',
-            right:4,
-            alignSelf:'center',
-            color:colorScheme==="dark"?'#fff':'#000',
+      headerTitle:`${slug}`
+       
+        
 
-           }}   size={24}/>}
-          </View>
-        },
-        
-        
-      
     }}
     />
     <FlatList ItemSeparatorComponent={()=><View style={{
         width:16
-    }}></View>} data={searchData?.meals} renderItem={renderItem} showsVerticalScrollIndicator={false} ListEmptyComponent={Nodata} ListFooterComponent={footercomp} />
+    }}></View>} data={data?.meals} renderItem={renderItem} showsVerticalScrollIndicator={false} ListEmptyComponent={Nodata} ListFooterComponent={footercomp} />
        
     </View>
   )
@@ -132,11 +94,22 @@ const colorScheme=useColorScheme()
 export default Page
 
 const styles=StyleSheet.create({
-  
+  input:{
+
+    borderWidth:1,
+    borderColor:'red',
+minWidth:260,
+
+
+maxWidth:340,
+    borderRadius:4,
+    padding:4,
+    
+  },
   Backtitle:{
     flexDirection:'row',
     alignItems:'center',
-    
+    gap:4
     
 
 }

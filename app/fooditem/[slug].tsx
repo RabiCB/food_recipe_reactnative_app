@@ -7,6 +7,7 @@ import Detailpage from '../../components/Detailpage/Detailpage'
 import {useQuery} from "@tanstack/react-query"
 import { useRouter } from 'expo-router'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
+import { ActivityIndicator } from 'react-native'
 interface Itemtype{
     meals:{
         strMeal:string
@@ -103,7 +104,7 @@ const colorScheme=useColorScheme()
                         <Text style={{
                             marginTop:4,
                             color:colorScheme==="dark"?'#fff':'#000'
-                        }}>{d?.strMeal}</Text>
+                        }}>{d?.strMeal?.substring(0,30)}</Text>
 
 
                     </View>
@@ -130,9 +131,12 @@ const colorScheme=useColorScheme()
             }
 
             {
-                isLoading &&<View>
-                    <Text>hhhh</Text>
-                </View>
+                isLoading &&      <View style={{ flex: 1,alignItems: "center", justifyContent: "center", zIndex: 20 ,paddingTop:16}}>
+                <ActivityIndicator
+                  size="large" 
+                />
+              </View>
+        
             } 
          </ScrollView>
 
