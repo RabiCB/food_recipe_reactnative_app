@@ -1,15 +1,50 @@
-import { StyleSheet } from 'react-native';
+import { FlatListComponent, Image, ScrollView, StyleSheet } from 'react-native';
 
 import EditScreenInfo from '../../components/EditScreenInfo';
 import { Text, View } from '../../components/Themed';
+import axios from 'axios';
+import { useCallback, useEffect, useState } from 'react';
+import Card from '../../components/Card';
+import { FlatList } from 'react-native';
+import Catogories from '../../components/Catogories';
+import { RefreshControl } from 'react-native-gesture-handler';
+import { useQueryClient } from '@tanstack/react-query';
+import Seafood from '../../components/Seafood';
+import Allitem from '../../components/Allitem';
+interface Iprops{
+  strMeal:string
+  strMealThumb:string
+
+  idMeal:string
+}
+
+
+
+
+
+
 
 export default function TabOneScreen() {
+  const [refreshing, setRefreshing] = useState(false);
+const query=useQueryClient()
+  const onRefresh =useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      query.invalidateQueries()
+      setRefreshing(false);
+    }, 2000);
+  }, []);
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/index.tsx" />
-    </View>
+    <ScrollView showsVerticalScrollIndicator={false}  refreshControl={
+      <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+    }>
+   <Card  />
+   <Catogories/>
+   <Allitem/>
+   <Seafood/>
+
+   </ScrollView>
+   
   );
 }
 

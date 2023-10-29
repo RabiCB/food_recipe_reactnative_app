@@ -1,9 +1,16 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Link, Tabs } from 'expo-router';
-import { Pressable, useColorScheme } from 'react-native';
-
+import { Image, Pressable, StyleSheet, Text, TextInput, View, useColorScheme } from 'react-native';
 import Colors from '../../constants/Colors';
+import { Feather, Ionicons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
+import { Platform } from 'react-native';
+import { Drawer } from 'expo-router/drawer';
+import { TouchableOpacity } from 'react-native';
+import { useRouter } from 'expo-router';
+import { Entypo } from '@expo/vector-icons';
 
+import { useSearchStore } from '../../store/Searchstore';
 /**
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
  */
@@ -17,39 +24,167 @@ function TabBarIcon(props: {
 export default function TabLayout() {
   const colorScheme = useColorScheme();
 
+  const router=useRouter()
+
+
+const {searchText,setSearchText}=useSearchStore()
+
+
+
+const handleSearch=()=>{
+
+  router.push(`/search/${searchText}`)
+ 
+
+}
   return (
+    <>
+    
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-      }}>
+      }}
+     
+
+      
+      >
       <Tabs.Screen
         name="index"
+
+        
+
+
+
         options={{
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable>
+          title:'Home',
+          tabBarIcon: ({ color }) => <FontAwesome name="home" color={color} size={24} />,
+          headerTitle:'',
+          headerLeft: () => (
+          
+            <View style={{
+              paddingLeft:8,
+              flexDirection:'row',
+
+            }}> 
+              <Pressable onPress={()=>{
+                alert('hello')
+              }}>
                 {({ pressed }) => (
-                  <FontAwesome
-                    name="info-circle"
-                    size={25}
-                    color={Colors[colorScheme ?? 'light'].text}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
+
+                  <View style={{
+                    marginRight:4
+                  }}>
+                    <View>
+                      <Text style={{
+                        color:colorScheme==="dark"?'#fff':'#000',
+                        fontWeight:'500',
+                        fontSize:16
+                      }}>Recipebins</Text>
+
+                      </View>
+
+
+                  </View>
                 )}
               </Pressable>
-            </Link>
+              
+
+            </View>
+              
           ),
+          headerRight:()=>(
+            <View style={{
+              paddingRight:8
+            }} >
+              <FontAwesome name="shopping-bag" color={colorScheme==="dark"?'#fff':'#000'} size={24}/>
+            </View>
+          ),
+          headerShadowVisible:false
         }}
       />
       <Tabs.Screen
         name="two"
+        
         options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+
+          
+        headerLeft:()=>{
+          return <View style={{
+            marginLeft:8,
+          
+          }}>
+            <TouchableOpacity activeOpacity={1} accessibilityIgnoresInvertColors style={styles.Backtitle} onPress={()=>router.back()}>
+                <Ionicons name="chevron-back" size={24} color={colorScheme==="dark"?'#fff':'#000'} />
+               
+            </TouchableOpacity>
+          </View>
+        },
+          headerTitle: ()=>{
+            return<View style={{
+              borderWidth:1,
+              borderColor:'gray',
+          minWidth:260,
+          position:'relative',
+         
+         
+          
+          maxWidth:340,
+              borderRadius:4,
+              padding:6,
+              
+
+           }}  >
+             <TextInput style={{
+                
+            color:colorScheme==="dark"?'#fff':'#000',
+            outline:'none'
+             }}
+            
+          returnKeyType='search' placeholder='search for recipe..' value={searchText} onChangeText={(text)=>setSearchText(text)}
+              onSubmitEditing={
+              handleSearch
+             } />
+             {searchText &&<Entypo name="cross" onPress={()=>{
+              setSearchText('')
+             }} style={{
+              
+              position:'absolute',
+              right:4,
+              alignSelf:'center',
+              color:colorScheme==="dark"?'#fff':'#000',
+
+             }}   size={24}/>}
+            </View>
+          },
+          
+          tabBarIcon: ({ color }) => <FontAwesome name="search" size={24} color={color} />,
+          title:'Search'
         }}
       />
     </Tabs>
+    </>
   );
 }
+
+
+const styles=StyleSheet.create({
+  input:{
+
+    borderWidth:1,
+    borderColor:'red',
+minWidth:260,
+
+
+maxWidth:340,
+    borderRadius:4,
+    padding:4,
+    
+  },
+  Backtitle:{
+    flexDirection:'row',
+    alignItems:'center',
+    gap:4
+    
+
+}
+})
