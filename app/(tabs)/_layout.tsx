@@ -140,7 +140,7 @@ const handleSearch=()=>{
             outline:'none'
              }}
             
-          returnKeyType='search' placeholder='search for recipe..' value={searchText} onChangeText={(text)=>setSearchText(text)}
+          returnKeyType='search' placeholder='search for recipes..' value={searchText} onChangeText={(text)=>setSearchText(text)}
               onSubmitEditing={
               handleSearch
              } />
