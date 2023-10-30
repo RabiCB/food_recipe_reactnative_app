@@ -2,7 +2,7 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Link, Tabs } from 'expo-router';
 import { Image, Pressable, StyleSheet, Text, TextInput, View, useColorScheme } from 'react-native';
 import Colors from '../../constants/Colors';
-import { Feather, Ionicons } from '@expo/vector-icons';
+import { EvilIcons, Feather, Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Platform } from 'react-native';
 import { Drawer } from 'expo-router/drawer';
@@ -126,13 +126,18 @@ const handleSearch=()=>{
           minWidth:260,
           position:'relative',
               borderRadius:4,
-              padding:6,
+              flexDirection:'row',
+              alignItems:'center',
+              justifyContent:"space-between",
+              padding:Platform.OS=="android"?2:6,
               
 
            }}  >
+            
              <TextInput style={{
                 
             color:colorScheme==="dark"?'#fff':'#000',
+            paddingLeft:6,
             outline:'none'
              }}
             
@@ -144,12 +149,24 @@ const handleSearch=()=>{
               setSearchText('')
              }} style={{
               
-              position:'absolute',
-              right:4,
-              alignSelf:'center',
+            
+         
               color:colorScheme==="dark"?'#fff':'#000',
 
-             }}   size={24}/>}
+             }}   size={18}/>}
+             {
+              !searchText &&(
+                <EvilIcons name="search"  style={{
+              
+            
+         
+                  color:colorScheme==="dark"?'#fff':'#000',
+    
+                 }} size={24}/>
+              )
+               
+              
+            }
             </View>
           },
           

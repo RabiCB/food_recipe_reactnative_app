@@ -1,4 +1,4 @@
-import { View, Text, FlatList, useColorScheme, TextInput, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, FlatList, useColorScheme, TextInput, TouchableOpacity, StyleSheet, Platform } from 'react-native'
 import React from 'react'
 import { useRouter, useSearchParams } from 'expo-router'
 import { Stack } from 'expo-router'
@@ -71,17 +71,14 @@ const colorScheme=useColorScheme()
 
     
     options={{
-      headerLeft:()=>{
-        return <View style={{
-          marginLeft:8,
-        
-        }}>
-          <TouchableOpacity activeOpacity={1} accessibilityIgnoresInvertColors  onPress={()=>router.back()}>
-              <Ionicons name="chevron-back" size={24} color={colorScheme==="dark"?'#fff':'#000'} />
-             
-          </TouchableOpacity>
-        </View>
+
+      headerBackTitleStyle:{
+fontSize:24,
+
       },
+
+      headerBackTitle:'',
+     
         headerTitle: ()=>{
           return<View style={{
             borderWidth:1,
@@ -90,7 +87,10 @@ const colorScheme=useColorScheme()
         position:'relative',
         maxWidth:340,
             borderRadius:4,
-            padding:6,
+            flexDirection:'row',
+              
+            justifyContent:"space-between",
+            padding:Platform.OS=="android"?2:6,
             
 
          }}  >
@@ -104,16 +104,18 @@ const colorScheme=useColorScheme()
             onSubmitEditing={
             handleSearch
            } />
-           {searchText &&<Entypo name="cross" onPress={()=>{
+           {searchText &&<Entypo name="cross" color="red" onPress={()=>{
             setSearchText('')
            }} style={{
+            
             
             position:'absolute',
             right:4,
             alignSelf:'center',
             color:colorScheme==="dark"?'#fff':'#000',
+            alignContent:'center'
 
-           }}   size={24}/>}
+           }}   size={18}/>}
           </View>
         },
         
